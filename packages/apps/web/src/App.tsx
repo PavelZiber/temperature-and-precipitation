@@ -1,27 +1,20 @@
 import React from 'react'
-import 'primereact/resources/themes/nova-light/theme.css'
-import 'primereact/resources/primereact.min.css'
-import 'primeicons/primeicons.css'
-import './App.css'
-import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom'
+import { Router, Switch, Route } from 'react-router-dom'
+import { history } from './history'
 import { DashboardPage } from '@domains/dashboard'
 import { ChartPage } from '@domains/chart'
+import { Nav, Anchor, Box } from '@shared/ui'
+import { Grommet } from 'grommet'
 
 function App() {
   return (
-    <div className='App'>
-      <Router>
-        <div>
-          <nav>
-            <ul>
-              <li>
-                <Link to='/'>Home</Link>
-              </li>
-              <li>
-                <Link to='/chart'>Chart</Link>
-              </li>
-            </ul>
-          </nav>
+    <Grommet plain>
+      <Router history={history}>
+        <Nav direction='row' background='accent-3' pad='medium' justify='center'>
+          <Anchor onClick={() => history.push('/')}>Home</Anchor>
+          <Anchor onClick={() => history.push('/chart')}>Chart</Anchor>
+        </Nav>
+        <Box direction='row' pad='large' fill>
           <Switch>
             <Route path='/' exact>
               <DashboardPage />
@@ -30,9 +23,9 @@ function App() {
               <ChartPage />
             </Route>
           </Switch>
-        </div>
+        </Box>
       </Router>
-    </div>
+    </Grommet>
   )
 }
 
