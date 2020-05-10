@@ -4,7 +4,8 @@ import 'primereact/resources/primereact.min.css'
 import 'primeicons/primeicons.css'
 import './App.css'
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom'
-import { Dashboard } from '@domains/dashboard'
+import { DashboardPage } from '@domains/dashboard'
+import { ChartPage } from '@domains/chart'
 
 function App() {
   return (
@@ -16,11 +17,17 @@ function App() {
               <li>
                 <Link to='/'>Home</Link>
               </li>
+              <li>
+                <Link to='/chart'>Chart</Link>
+              </li>
             </ul>
           </nav>
           <Switch>
-            <Route path='/'>
-              <Dashboard />
+            <Route path='/' exact>
+              <DashboardPage />
+            </Route>
+            <Route path='/chart' exact>
+              <ChartPage />
             </Route>
           </Switch>
         </div>

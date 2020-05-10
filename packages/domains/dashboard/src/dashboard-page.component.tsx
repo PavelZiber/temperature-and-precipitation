@@ -10,4 +10,4 @@ const Page = () => {
   )
 }
 
-export const Dashboard = Page
+export const DashboardPage = Page
