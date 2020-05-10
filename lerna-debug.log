@@ -1,0 +1,13 @@
+0 silly argv {
+0 silly argv   _: [ 'run' ],
+0 silly argv   parallel: true,
+0 silly argv   lernaVersion: '3.20.2',
+0 silly argv   '$0': '/Users/pavel/Documents/projects/neota-tech/node_modules/.bin/lerna',
+0 silly argv   script: 'lint'
+0 silly argv }
+1 notice cli v3.20.2
+2 verbose rootPath /Users/pavel/Documents/projects/neota-tech
+3 info versioning independent
+4 error JSONError: Unexpected token } in JSON at position 405 while parsing near '...sx,ts,tsx --fix",  },  "browserslist":...' in packages/apps/web/package.json
+4 error     at module.exports (/Users/pavel/Documents/projects/neota-tech/node_modules/parse-json/index.js:26:19)
+4 error     at parse (/Users/pavel/Documents/projects/neota-tech/node_modules/load-json-file/index.js:15:9)
