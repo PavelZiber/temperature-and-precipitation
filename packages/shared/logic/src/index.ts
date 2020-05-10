@@ -1,1 +1,1 @@
-export const TRANSPILED_MODULES = ['@shared', '@domains', '@apps']
+export * from './api/stats.api'

@@ -1,60 +1,22 @@
-import React from 'react'
+import React, { memo } from 'react'
 import { Card, DataTable, Column } from '@shared/ui'
+import { useStatsApi } from '@shared/logic'
 
-const data = [
-  {
-    id: 1,
-    name: 'Eric',
-    jan: 1.222,
-    feb: 1.222,
-    mar: 1.222,
-    apr: 1.222,
-    may: 1.222,
-    jun: 1.222,
-    jul: 1.222,
-    aug: 1.222,
-    sep: 1.222,
-    oct: 1.222,
-    nov: 1.222,
-    dec: 1.222,
-  },
-  {
-    id: 2,
-    name: 'Chris',
-    jan: 1.222,
-    feb: 1.222,
-    mar: 1.222,
-    apr: 1.222,
-    may: 1.222,
-    jun: 1.222,
-    jul: 1.222,
-    aug: 1.222,
-    sep: 1.222,
-    oct: 1.222,
-    nov: 1.222,
-    dec: 1.222,
-  },
-  {
-    id: 3,
-    name: 'Alan',
-    jan: 1.222,
-    feb: 1.222,
-    mar: 1.222,
-    apr: 1.222,
-    may: 1.222,
-    jun: 1.222,
-    jul: 1.222,
-    aug: 1.222,
-    sep: 1.222,
-    oct: 1.222,
-    nov: 1.222,
-    dec: 1.222,
-  },
-]
+const formatNumber = (number?: number) => number?.toFixed(2)
+
+const prepareData = (response) =>
+  response?.map(({ gcm, monthVals, variable }) => {
+    const months = monthVals.map((v) => formatNumber(v))
+    const [jan, feb, mar, apr, may, jun, jul, aug, sep, oct, nov, dec] = months
+    return { id: gcm, name: `${gcm} ${variable}`, jan, feb, mar, apr, may, jun, jul, aug, sep, oct, nov, dec }
+  })
 
 const Page = () => {
+  const { data: response } = useStatsApi({ avg: 'mavg' })
+  const data = prepareData(response)
+
   return (
-    <Card title='Monthly average' className='page'>
+    <Card title='Monthly average'>
       <DataTable value={data} responsive autoLayout>
         <Column field='name' header='Name' />
         <Column field='jan' header='January' />
@@ -74,4 +36,4 @@ const Page = () => {
   )
 }
 
-export const DashboardPage = Page
+export const DashboardPage = memo(Page)

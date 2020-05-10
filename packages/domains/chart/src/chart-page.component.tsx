@@ -1,18 +1,39 @@
 import React from 'react'
 import { Card, Chart } from '@shared/ui'
-const data = {
-  labels: ['bccr_bcm2_0', 'cccma_cgcm3_1', 'cnrm_cm3'],
-  datasets: [
-    {
-      label: 'Average temp. from 1920-1939',
-      backgroundColor: '#42A5F5',
-      data: [10.522619628892, 8.353677368158, 10.329861450195999],
+import { useStatsApi } from '@shared/logic'
+
+const formatNumber = (number?: number) => number?.toFixed(2)
+
+const prepareData = (response) => {
+  const { variable, fromYear, toYear } = response[0]
+  return response?.reduce(
+    (acc, { gcm, annualData }) => {
+      const number = formatNumber(annualData[0])
+      acc.labels = [...acc.labels, gcm]
+      acc.datasets[0].data = [...acc.datasets[0].data, number]
+      return acc
     },
-  ],
+    {
+      labels: [],
+      datasets: [
+        {
+          label: `${variable} from ${fromYear} to ${toYear}`,
+          backgroundColor: '#42A5F5',
+          data: [],
+        },
+      ],
+    },
+  )
 }
+
 const Page = () => {
+  const { data: response, loading } = useStatsApi({ avg: 'annualavg' })
+  if (loading) {
+    return null
+  }
+  const data = prepareData(response)
   return (
-    <Card title='Yearly average' className='page'>
+    <Card title='Yearly average'>
       <Chart type='bar' data={data} />
     </Card>
   )
