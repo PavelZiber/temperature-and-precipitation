@@ -4,6 +4,7 @@
   "scripts": {
     "develop": "lerna run develop --scope=@apps/web",
     "build": "lerna run build --scope=@apps/web",
+    "serve": "lerna run serve --scope=@apps/web",
     "update:dep": "lernaupdate",
     "synchro:dep": "lernaupdate --dedupe",
     "lint": "lerna run lint --parallel",

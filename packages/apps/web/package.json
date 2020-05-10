@@ -8,6 +8,7 @@
     "@domains/dashboard": "*",
     "@types/react-loadable": "^5.5.3",
     "@types/react-router-dom": "5.1.5",
+    "express": "^4.17.1",
     "grommet": "^2.13.0",
     "react": "16.13.1",
     "react-dom": "16.13.1",
@@ -17,6 +18,7 @@
   "scripts": {
     "develop": "craco start",
     "build": "craco build",
+    "serve": "node server.js",
     "test": "craco test",
     "eject": "craco eject",
     "lint": "eslint src --ext js,jsx,ts,tsx",
