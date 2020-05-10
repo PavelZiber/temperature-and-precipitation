@@ -1,10 +1,15 @@
 import React from 'react'
 import { Router, Switch, Route } from 'react-router-dom'
 import { history } from './history'
-import { Nav, Anchor, Box } from '@shared/ui'
-import { Grommet } from 'grommet'
+import { Menubar, Layout } from '@shared/ui'
 import { RouteLoading } from './route-loading.component'
 import Loadable from 'react-loadable'
+
+import 'primereact/resources/themes/nova-light/theme.css'
+import 'primereact/resources/primereact.min.css'
+import 'primeicons/primeicons.css'
+import 'primeflex/primeflex.css'
+import './index.css'
 
 const AsyncDashboard = Loadable({
   loader: () => import('@domains/dashboard'),
@@ -15,26 +20,32 @@ const AsyncChart = Loadable({
   loader: () => import('@domains/chart'),
   loading: RouteLoading,
 })
-
+const items = [
+  {
+    label: 'Table',
+    icon: 'pi pi-fw pi-list',
+    command: () => history.push('/'),
+  },
+  {
+    label: 'Chart',
+    icon: 'pi pi-fw pi-chart-bar',
+    command: () => history.push('/chart'),
+  },
+]
 export function App() {
   return (
-    <Grommet plain>
-      <Router history={history}>
-        <Nav direction='row' background='accent-3' pad='medium' justify='center'>
-          <Anchor onClick={() => history.push('/')}>Home</Anchor>
-          <Anchor onClick={() => history.push('/chart')}>Chart</Anchor>
-        </Nav>
-        <Box direction='row' pad='large' fill>
-          <Switch>
-            <Route path='/' exact>
-              <AsyncDashboard />
-            </Route>
-            <Route path='/chart' exact>
-              <AsyncChart />
-            </Route>
-          </Switch>
-        </Box>
-      </Router>
-    </Grommet>
+    <Router history={history}>
+      <Menubar model={items} />
+      <Layout>
+        <Switch>
+          <Route path='/' exact>
+            <AsyncDashboard />
+          </Route>
+          <Route path='/chart' exact>
+            <AsyncChart />
+          </Route>
+        </Switch>
+      </Layout>
+    </Router>
   )
 }
