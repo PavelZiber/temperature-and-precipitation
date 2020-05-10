@@ -1,1 +1,3 @@
-export * from './chart-page.component'
+import { ChartPage } from './chart-page.component'
+
+export default ChartPage

@@ -1,12 +1,22 @@
 import React from 'react'
 import { Router, Switch, Route } from 'react-router-dom'
 import { history } from './history'
-import { DashboardPage } from '@domains/dashboard'
-import { ChartPage } from '@domains/chart'
 import { Nav, Anchor, Box } from '@shared/ui'
 import { Grommet } from 'grommet'
+import { RouteLoading } from './route-loading.component'
+import Loadable from 'react-loadable'
 
-function App() {
+const AsyncDashboard = Loadable({
+  loader: () => import('@domains/dashboard'),
+  loading: RouteLoading,
+})
+
+const AsyncChart = Loadable({
+  loader: () => import('@domains/chart'),
+  loading: RouteLoading,
+})
+
+export function App() {
   return (
     <Grommet plain>
       <Router history={history}>
@@ -17,10 +27,10 @@ function App() {
         <Box direction='row' pad='large' fill>
           <Switch>
             <Route path='/' exact>
-              <DashboardPage />
+              <AsyncDashboard />
             </Route>
             <Route path='/chart' exact>
-              <ChartPage />
+              <AsyncChart />
             </Route>
           </Switch>
         </Box>
@@ -28,5 +38,3 @@ function App() {
     </Grommet>
   )
 }
-
-export default App
