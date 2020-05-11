@@ -12,6 +12,8 @@
     "react": "16.13.1",
     "react-dom": "16.13.1",
     "react-hooks-lib": "^0.1.5",
-    "@shared/ui": "*"
+    "@shared/ui": "*",
+    "@shared/logic": "*",
+    "@shared/components": "*"
   }
 }

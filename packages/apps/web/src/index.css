@@ -5,4 +5,10 @@ body .p-menubar {
 .p-menubar .p-menubar-root-list {
   margin: 0 auto;
 }
-
+.filter-form {
+  width: 40vw;
+  min-height: 40vh;
+}
+.filter-form .p-dropdown {
+  width: 100%;
+}

@@ -2,6 +2,7 @@ import React from 'react'
 import { Router, Switch, Route } from 'react-router-dom'
 import { history } from './history'
 import { Menubar, Layout } from '@shared/ui'
+import { FilterContext } from '@shared/logic'
 import { RouteLoading } from './route-loading.component'
 import Loadable from 'react-loadable'
 
@@ -37,14 +38,16 @@ export function App() {
     <Router history={history}>
       <Menubar model={items} />
       <Layout>
-        <Switch>
-          <Route path='/' exact>
-            <AsyncDashboard />
-          </Route>
-          <Route path='/chart' exact>
-            <AsyncChart />
-          </Route>
-        </Switch>
+        <FilterContext>
+          <Switch>
+            <Route path='/' exact>
+              <AsyncDashboard />
+            </Route>
+            <Route path='/chart' exact>
+              <AsyncChart />
+            </Route>
+          </Switch>
+        </FilterContext>
       </Layout>
     </Router>
   )

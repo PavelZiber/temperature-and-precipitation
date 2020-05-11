@@ -1,6 +1,8 @@
 import React, { memo } from 'react'
 import { Card, DataTable, Column } from '@shared/ui'
-import { useStatsApi } from '@shared/logic'
+import { useStatsApi, useFilterState, getStatsUrl, Filter as FilterType, STATS_MODE } from '@shared/logic'
+import { Filter } from '@shared/components'
+import { useDidUpdate } from 'react-hooks-lib'
 
 const formatNumber = (number?: number) => number?.toFixed(2)
 
@@ -11,12 +13,19 @@ const prepareData = (response) =>
     return { id: gcm, name: `${gcm} ${variable}`, jan, feb, mar, apr, may, jun, jul, aug, sep, oct, nov, dec }
   })
 
+const prepareFilter = (filter: FilterType) => ({ ...filter, avg: STATS_MODE.MONTHLY_AVERAGE })
+
 const Page = () => {
-  const { data: response } = useStatsApi({ avg: 'mavg' })
+  const { state } = useFilterState()
+  const filter = prepareFilter(state)
+  const { data: response, setUrl } = useStatsApi(filter)
   const data = prepareData(response)
+
+  useDidUpdate(() => setUrl(getStatsUrl(filter)), [state])
 
   return (
     <Card title='Monthly average'>
+      <Filter />
       <DataTable value={data} responsive autoLayout>
         <Column field='name' header='Name' />
         <Column field='jan' header='January' />

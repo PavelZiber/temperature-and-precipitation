@@ -1,5 +1,5 @@
 {
-  "name": "@domains/dashboard",
+  "name": "@shared/components",
   "version": "0.0.0",
   "license": "MIT",
   "main": "./src/index.ts",
@@ -9,11 +9,9 @@
     "tsc": "tsc"
   },
   "dependencies": {
+    "formik": "^2.1.4",
     "react": "16.13.1",
     "react-dom": "16.13.1",
-    "react-hooks-lib": "^0.1.5",
-    "@shared/ui": "*",
-    "@shared/logic": "*",
-    "@shared/components": "*"
+    "react-hooks-lib": "^0.1.5"
   }
 }
