@@ -11,9 +11,11 @@ export const getStatsUrl = ({ avg, country, period, type }: Filter) => {
 }
 
 export function useStatsData(filter: Filter) {
-  const [state, setState] = useState(undefined)
+  const initState = { data: undefined, loading: true }
+  const [state, setState] = useState(initState)
   useEffect(() => {
     let requests
+    setState(initState)
     if (filter.country === YUGOSLAVIA) {
       requests = STATS_COUNTRIES.filter((c: Option) => c.value !== YUGOSLAVIA).map((c) =>
         axios(getStatsUrl({ ...filter, country: c.value })),
@@ -21,7 +23,7 @@ export function useStatsData(filter: Filter) {
     } else {
       requests = [axios(getStatsUrl(filter))]
     }
-    Promise.all(requests).then((result: any) => setState(result))
+    Promise.all(requests).then((result: any) => setState({ data: result, loading: false }))
     return () => {}
   }, [getStatsUrl(filter)])
   return state

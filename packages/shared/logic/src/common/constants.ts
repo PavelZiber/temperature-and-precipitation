@@ -1,4 +1,5 @@
 export const BASE_URL = 'http://climatedataapi.worldbank.org/climateweb/rest/v1/country/'
+import { Option } from '@shared/types'
 
 export const YUGOSLAVIA = 'YUG'
 
@@ -23,6 +24,11 @@ export const STATS_TYPES = [
   { label: 'temperature', value: 'tas' },
   { label: 'precipitation', value: 'pr' },
 ]
+
+export const STATS_TYPES_MAP = STATS_TYPES.reduce((acc: Record<string, string>, s: Option) => {
+  acc[s.value] = s.label
+  return acc
+}, {})
 
 export const STATS_MODE = {
   MONTHLY_AVERAGE: 'mavg',

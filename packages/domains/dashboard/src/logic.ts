@@ -1,5 +1,5 @@
 import { STATS_MODE, useStatsData, formatNumber, avg } from '@shared/logic'
-import { MonthStatItem, Filter, StatsResponse } from '@shared/types'
+import { MonthStatItem, Filter, StatsResponse, StatsData } from '@shared/types'
 
 const prepareResponse = (response: MonthStatItem[]) =>
   response?.map(({ gcm, monthVals, variable }: MonthStatItem) => {
@@ -54,10 +54,11 @@ const prepareFilter = (filter: Filter) => ({ ...filter, avg: STATS_MODE.MONTHLY_
 
 export function prepareData(state: Filter) {
   const filter = prepareFilter(state)
-  const result: any = useStatsData(filter)
-  if (!result) {
+  const { loading, data }: StatsData = useStatsData(filter)
+  if (!data || loading) {
     return undefined
   }
-  const response = result.length > 1 ? countAvg(result) : result[0].data
+  // @ts-ignore
+  const response = data.length > 1 ? countAvg(data) : data[0].data
   return prepareResponse(response)
 }

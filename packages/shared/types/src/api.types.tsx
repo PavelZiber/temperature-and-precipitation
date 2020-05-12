@@ -22,3 +22,13 @@ export type Filter = {
 export type StatsResponse<T> = {
   data: T[]
 }
+
+export type Option = {
+  label: string
+  value: string
+}
+
+export type StatsData = {
+  data?: any[]
+  loading: boolean
+}

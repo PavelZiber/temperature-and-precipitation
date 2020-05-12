@@ -1,5 +1,5 @@
-import { STATS_MODE, useStatsData, avg, formatNumber } from '@shared/logic'
-import { Filter, YearStatItem, StatsResponse } from '@shared/types'
+import { STATS_MODE, useStatsData, avg, formatNumber, STATS_TYPES_MAP } from '@shared/logic'
+import { Filter, YearStatItem, StatsResponse, StatsData } from '@shared/types'
 
 type DataSet = { label: string; backgroundColor: string; data?: never[] }
 
@@ -8,8 +8,7 @@ type GraphConfig = {
   datasets: DataSet[]
   response: boolean
 }
-const prepareResponse = (response: YearStatItem[]) => {
-  const { variable, fromYear, toYear }: YearStatItem = response?.[0]
+const prepareResponse = (response: YearStatItem[], filter: Filter) => {
   return response?.reduce(
     (acc: any, { gcm, annualData }: YearStatItem) => {
       const number = formatNumber(annualData[0])
@@ -22,7 +21,7 @@ const prepareResponse = (response: YearStatItem[]) => {
       labels: [],
       datasets: [
         {
-          label: `${variable} from ${fromYear} to ${toYear}`,
+          label: STATS_TYPES_MAP[filter.type],
           backgroundColor: '#c8c8c8',
           data: [],
         },
@@ -39,7 +38,7 @@ const countAvg = (response: StatsResponse<YearStatItem>[]): YearStatItem[] => {
   const agregate = data?.reduce((rv: Record<string, YearStatItem>, x: YearStatItem) => {
     const current = rv[x[key]]?.annualData || []
     const [xAnnual] = x.annualData
-    const [annual = 0] = current
+    const [annual = xAnnual] = current
 
     rv[x[key]] = {
       ...x,
@@ -52,10 +51,11 @@ const countAvg = (response: StatsResponse<YearStatItem>[]): YearStatItem[] => {
 
 export const prepareData = (state: Filter) => {
   const filter = prepareFilter(state)
-  const result: any = useStatsData(filter)
-  if (!result) {
+  const { loading, data }: StatsData = useStatsData(filter)
+  if (!data || loading) {
     return undefined
   }
-  const response = result.length > 1 ? countAvg(result) : result[0]?.data
-  return prepareResponse(response)
+  // @ts-ignore
+  const response = data.length > 1 ? countAvg(data) : data[0].data
+  return prepareResponse(response, filter)
 }
