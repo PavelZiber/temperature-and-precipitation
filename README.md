@@ -23,6 +23,7 @@ It correctly bundles React in production mode and optimizes the build for the be
 
 ### `yarn serve`
 Serve production build
+Open http://localhost:3000
 
 ### `yarn update:dep`
 Starts the wizard for dependency update in monorepo
