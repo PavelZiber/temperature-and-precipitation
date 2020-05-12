@@ -1,8 +1,9 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { Option } from '@shared/components'
 import { BASE_URL, STATS_COUNTRIES, YUGOSLAVIA } from '../common/constants'
 import { Filter } from '../state/filter.state'
 import axios from 'axios'
+import { useShallowEqualEffect } from 'react-hooks-lib'
 
 export const getStatsUrl = ({ avg, country, period, type }: Filter) => {
   const [from, to] = period?.split('-') || []
@@ -25,7 +26,7 @@ export type YearStatItem = StatItem & {
 
 export function useStatsData(filter: Filter) {
   const [state, setState] = useState(null)
-  useEffect(() => {
+  useShallowEqualEffect(() => {
     let requests
     if (filter.country === YUGOSLAVIA) {
       requests = STATS_COUNTRIES.filter((c: Option) => c.value !== YUGOSLAVIA).map((c) =>

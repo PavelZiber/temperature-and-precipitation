@@ -1,26 +1,23 @@
-import React, { FC } from 'react'
+import React, { FC, useState } from 'react'
 import { Button, Dialog, Form as FormUI, FormGroup } from '@shared/ui'
 import { useFilterState, STATS_PERIODS, STATS_COUNTRIES, STATS_TYPES } from '@shared/logic'
-import { useToggle } from 'react-hooks-lib'
-import { Formik, Form, FormikProps } from 'formik';
+import { Formik, Form } from 'formik';
 import { Select } from '../select/select.component'
 
-
-
 export const Filter: FC = () => {
-  const { on, toggle, reset } = useToggle(false)
+  const [on, setOpen] = useState(false)
   const { state, set } = useFilterState()
   return (
     <>
-      <Dialog header='Filter' visible={on} modal onHide={reset}>
+      <Dialog header='Filter' visible={on} modal onHide={() => setOpen(false)}>
         <Formik
           initialValues={state}
           onSubmit={(values) => {
+            setOpen(false)
             set(() => values)
-            reset()
           }}
         >
-          {(props: FormikProps<Filter>) => (
+          {() => (
             <Form className='filter-form'>
               <FormUI>
                 <FormGroup>
@@ -43,7 +40,7 @@ export const Filter: FC = () => {
           )}
         </Formik>
       </Dialog>
-      <Button label='Filter' onClick={toggle} className='p-button-primary p-button-raised' />
+      <Button label='Filter' onClick={() => setOpen(true)} className='p-button-primary p-button-raised' />
     </>
   )
 }

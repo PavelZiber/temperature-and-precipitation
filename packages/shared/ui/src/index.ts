@@ -8,5 +8,6 @@ import { Dialog } from 'primereact/dialog'
 import { Dropdown } from 'primereact/dropdown'
 import { Form } from './form.component'
 import { FormGroup } from './form-group.component'
+import { Spinner } from './spinner.component'
 
-export { Menubar, DataTable, Card, Column, Chart, Layout, Button, Dialog, Dropdown, Form, FormGroup }
+export { Menubar, DataTable, Card, Column, Chart, Layout, Button, Dialog, Dropdown, Form, FormGroup, Spinner }
