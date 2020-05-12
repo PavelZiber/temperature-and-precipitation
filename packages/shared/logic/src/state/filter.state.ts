@@ -1,12 +1,7 @@
+// @ts-ignore
 import { createContextState } from 'react-hooks-lib'
+import { Filter } from '@shared/types'
 import { STATS_COUNTRIES, STATS_PERIODS, STATS_TYPES } from '../common/constants'
-
-export type Filter = {
-  country: string
-  period: string
-  type: string
-  avg?: string
-}
 
 const initValues: Filter = {
   country: STATS_COUNTRIES[0].value,

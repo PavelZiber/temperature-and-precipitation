@@ -1,5 +1,5 @@
 {
-  "name": "@shared/logic",
+  "name": "@shared/types",
   "version": "0.0.0",
   "license": "MIT",
   "main": "./src/index.ts",
@@ -7,12 +7,5 @@
     "lint": "eslint src --ext js,jsx,ts,tsx",
     "lint:fix": "eslint src --ext js,jsx,ts,tsx --fix",
     "tsc": "tsc"
-  },
-  "dependencies": {
-    "axios": "^0.19.2",
-    "react": "16.13.1",
-    "react-dom": "16.13.1",
-    "react-hooks-lib": "^0.1.5",
-    "@shared/types": "*"
   }
 }

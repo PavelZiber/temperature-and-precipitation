@@ -27,6 +27,8 @@ module.exports = {
     "@typescript-eslint"
   ],
   "rules": {
-    "react/prop-types": [2, { ignore: ['children'] }]
+    "react/prop-types": [2, { ignore: ['children'] }],
+    "no-unused-vars": "off",
+    "@typescript-eslint/no-unused-vars": ["error"]
   }
 };

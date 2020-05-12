@@ -1,7 +1,7 @@
 import React, { FC, useState } from 'react'
 import { Button, Dialog, Form as FormUI, FormGroup } from '@shared/ui'
 import { useFilterState, STATS_PERIODS, STATS_COUNTRIES, STATS_TYPES } from '@shared/logic'
-import { Formik, Form } from 'formik';
+import { Formik, Form } from 'formik'
 import { Select } from '../select/select.component'
 
 export const Filter: FC = () => {

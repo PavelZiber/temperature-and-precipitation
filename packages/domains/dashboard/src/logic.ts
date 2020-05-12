@@ -1,16 +1,17 @@
-import { Filter as FilterType, STATS_MODE, useStatsData, MonthStatItem, formatNumber, avg } from '@shared/logic'
+import { STATS_MODE, useStatsData, formatNumber, avg } from '@shared/logic'
+import { MonthStatItem, Filter, StatsResponse } from '@shared/types'
 
 const prepareResponse = (response: MonthStatItem[]) =>
-  response?.map(({ gcm, monthVals, variable }) => {
+  response?.map(({ gcm, monthVals, variable }: MonthStatItem) => {
     const months = monthVals.map((v) => formatNumber(v))
     const [jan, feb, mar, apr, may, jun, jul, aug, sep, oct, nov, dec] = months
     return { id: gcm, name: `${gcm} ${variable}`, jan, feb, mar, apr, may, jun, jul, aug, sep, oct, nov, dec }
   })
 
-const countAvg = (response) => {
-  const data = response?.reduce((acc, { data }) => [...acc, ...data], [])
+const countAvg = (response: StatsResponse<MonthStatItem>[]): MonthStatItem[] => {
+  const data = response?.reduce((acc: any, { data }: StatsResponse<MonthStatItem>) => [...acc, ...data], [])
   const key = 'gcm'
-  const agregate = data?.reduce((rv, x: MonthStatItem) => {
+  const agregate = data?.reduce((rv: Record<string, MonthStatItem>, x: MonthStatItem) => {
     const current = rv[x[key]]?.monthVals || []
     const [janX, febX, marX, aprX, mayX, junX, julX, augX, sepX, octX, novX, decX] = x.monthVals
     const [
@@ -49,11 +50,11 @@ const countAvg = (response) => {
   return Object.values(agregate)
 }
 
-const prepareFilter = (filter: FilterType) => ({ ...filter, avg: STATS_MODE.MONTHLY_AVERAGE })
+const prepareFilter = (filter: Filter) => ({ ...filter, avg: STATS_MODE.MONTHLY_AVERAGE })
 
-export function prepareData(state: FilterType) {
+export function prepareData(state: Filter) {
   const filter = prepareFilter(state)
-  const result = useStatsData(filter)
+  const result: StatsResponse<MonthStatItem>[] = useStatsData(filter)
   if (!result) {
     return undefined
   }

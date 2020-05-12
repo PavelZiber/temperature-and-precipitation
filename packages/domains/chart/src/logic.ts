@@ -1,9 +1,17 @@
-import { STATS_MODE, Filter as FilterType, YearStatItem, useStatsData, avg, formatNumber } from '@shared/logic'
+import { STATS_MODE, useStatsData, avg, formatNumber } from '@shared/logic'
+import { Filter, YearStatItem, StatsResponse } from '@shared/types'
 
-const prepareResponse = (response) => {
-  const { variable, fromYear, toYear } = response[0]
+type DataSet = { label: string; backgroundColor: string; data?: never[] }
+
+type GraphConfig = {
+  labels: string[]
+  datasets: DataSet[]
+  response: boolean
+}
+const prepareResponse = (response: YearStatItem[]) => {
+  const { variable, fromYear, toYear }: YearStatItem = response?.[0]
   return response?.reduce(
-    (acc, { gcm, annualData }) => {
+    (acc: any, { gcm, annualData }: YearStatItem) => {
       const number = formatNumber(annualData[0])
       acc.labels = [...acc.labels, gcm]
       acc.datasets[0].data = [...acc.datasets[0].data, number]
@@ -23,13 +31,13 @@ const prepareResponse = (response) => {
   )
 }
 
-const prepareFilter = (filter: FilterType) => ({ ...filter, avg: STATS_MODE.YEARLY_AVERAGE })
+const prepareFilter = (filter: Filter) => ({ ...filter, avg: STATS_MODE.YEARLY_AVERAGE })
 
-const countAvg = (response) => {
-  const data = response?.reduce((acc, { data }) => [...acc, ...data], [])
+const countAvg = (response: StatsResponse<YearStatItem>[]): YearStatItem[] => {
+  const data = response?.reduce((acc: any, { data }: StatsResponse<YearStatItem>) => [...acc, ...data], [])
   const key = 'gcm'
-  const agregate = data?.reduce((rv, x: YearStatItem) => {
-    const current = rv[x[key]]?.monthVals || []
+  const agregate = data?.reduce((rv: Record<string, YearStatItem>, x: YearStatItem) => {
+    const current = rv[x[key]]?.annualData || []
     const [xAnnual] = x.annualData
     const [annual = 0] = current
 
@@ -42,12 +50,12 @@ const countAvg = (response) => {
   return Object.values(agregate)
 }
 
-export const prepareData = (state: FilterType) => {
+export const prepareData = (state: Filter) => {
   const filter = prepareFilter(state)
-  const result = useStatsData(filter)
+  const result: StatsResponse<YearStatItem>[] = useStatsData(filter)
   if (!result) {
     return undefined
   }
-  const response = result?.length > 1 ? countAvg(result) : result[0].data
+  const response: YearStatItem[] = result?.length > 1 ? countAvg(result) : result[0].data
   return prepareResponse(response)
 }

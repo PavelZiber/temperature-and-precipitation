@@ -1,4 +1,5 @@
 import { Menubar } from 'primereact/menubar'
+// @ts-ignore
 import { DataTable, Column } from 'primereact/datatable'
 import { Card } from 'primereact/card'
 import { Chart } from 'primereact/chart'

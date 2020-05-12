@@ -13,6 +13,8 @@
     "react-dom": "16.13.1",
     "@shared/ui": "*",
     "@shared/logic": "*",
-    "@shared/components": "*"
+    "@shared/components": "*",
+    "@shared/types": "*",
+    "axios": "^0.19.2"
   }
 }

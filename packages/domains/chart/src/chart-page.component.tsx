@@ -11,7 +11,7 @@ const Page = () => {
   useEffect(() => {
     updateData(result)
   }, [state])
-  const data = updatedData || result;
+  const data = updatedData || result
   return (
     <Card title='Yearly average'>
       <Filter />

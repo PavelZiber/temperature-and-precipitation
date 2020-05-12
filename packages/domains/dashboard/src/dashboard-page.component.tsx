@@ -6,7 +6,7 @@ import { prepareData } from './logic'
 
 const Page = () => {
   const { state } = useFilterState()
-  const result = prepareData(state)
+  const result: any = prepareData(state)
   const [updatedData, updateData] = useState(undefined)
   useEffect(() => {
     updateData(result)
