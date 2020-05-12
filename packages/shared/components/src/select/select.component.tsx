@@ -14,7 +14,7 @@ export type SelectProps = {
   onChange?: MouseEventHandler<HTMLDivElement>
 }
 
-export const Select: FC<SelectProps> = ({ options, value, name }) => (
+export const Select: FC<SelectProps> = ({ options, name }) => (
   <Field name={name}>
     {({ field, form }: FieldProps) => (
       <Dropdown

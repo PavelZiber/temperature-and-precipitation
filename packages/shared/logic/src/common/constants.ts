@@ -1,5 +1,7 @@
 export const BASE_URL = 'http://climatedataapi.worldbank.org/climateweb/rest/v1/country/'
 
+export const YUGOSLAVIA = 'YUG'
+
 export const STATS_COUNTRIES = [
   { label: 'Croatia', value: 'HRV' },
   { label: 'Slovenia', value: 'SVN' },
@@ -7,6 +9,7 @@ export const STATS_COUNTRIES = [
   { label: 'Bosnia & Herzegovina', value: 'BIH' },
   { label: 'Montenegro', value: 'MNE' },
   { label: 'Macedonia', value: 'MKD' },
+  { label: 'Yugoslavia', value: YUGOSLAVIA },
 ]
 
 export const STATS_PERIODS = [

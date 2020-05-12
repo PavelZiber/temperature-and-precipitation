@@ -1,12 +1,9 @@
 import React from 'react'
 import { Card, Chart } from '@shared/ui'
-import { useStatsApi, useFilterState, STATS_MODE, getStatsUrl, Filter as FilterType } from '@shared/logic'
+import { useFilterState, STATS_MODE, Filter as FilterType, YearStatItem, useStatsData, avg, formatNumber } from '@shared/logic'
 import { Filter } from '@shared/components'
-import { useDidUpdate } from 'react-hooks-lib'
 
-const formatNumber = (number?: number) => number?.toFixed(2)
-
-const prepareData = (response) => {
+const prepareResponse = (response) => {
   const { variable, fromYear, toYear } = response[0]
   return response?.reduce(
     (acc, { gcm, annualData }) => {
@@ -31,16 +28,38 @@ const prepareData = (response) => {
 
 const prepareFilter = (filter: FilterType) => ({ ...filter, avg: STATS_MODE.YEARLY_AVERAGE })
 
-const Page = () => {
-  const { state } = useFilterState()
-  const filter = prepareFilter(state)
-  const { data: response, loading, setUrl } = useStatsApi(filter)
+const countAvg = (response) => {
+  const data = response?.reduce((acc, { data }) => [...acc, ...data], [])
+  const key = 'gcm'
+  const agregate = data?.reduce((rv, x: YearStatItem) => {
+    const current = rv[x[key]]?.monthVals || []
+    const [xAnnual] = x.annualData
+    const [annual = 0] = current
 
-  useDidUpdate(() => setUrl(getStatsUrl(filter)), [state])
-  if (loading) {
+    rv[x[key]] = {
+      ...x,
+      annualData: [avg(xAnnual, annual)],
+    }
+    return rv
+  }, {})
+  return Object.values(agregate)
+}
+const prepareData = (state: FilterType) => {
+  const filter = prepareFilter(state)
+  const result = useStatsData(filter)
+  if (!result) {
     return null
   }
-  const data = prepareData(response)
+  const response = result?.length > 1 ? countAvg(result) : result[0].data
+  return prepareResponse(response)
+}
+
+const Page = () => {
+  const { state } = useFilterState()
+  const data = prepareData(state)
+  if (!data) {
+    return null
+  }
   return (
     <Card title='Yearly average'>
       <Filter />
