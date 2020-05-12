@@ -18,7 +18,7 @@ export const Select: FC<SelectProps> = ({ options, name }) => (
   <Field name={name}>
     {({ field, form }: FieldProps) => (
       <Dropdown
-        {...field}
+        value={field.value}
         options={options}
         onChange={(e) => {
           form.setFieldValue(name, e.value)

@@ -13,7 +13,7 @@ const Page = () => {
   }, [state])
   const data = updatedData || result
   return (
-    <Card title='Monthly average'>
+    <Card title='Month average'>
       <Filter />
       {!data && <Spinner />}
       <DataTable value={data} responsive autoLayout>

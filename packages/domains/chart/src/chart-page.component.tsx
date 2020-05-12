@@ -13,7 +13,7 @@ const Page = () => {
   }, [state])
   const data = updatedData || result
   return (
-    <Card title='Yearly average'>
+    <Card title='Year average'>
       <Filter />
       {!data && <Spinner />}
       <Chart type='horizontalBar' data={data} />
