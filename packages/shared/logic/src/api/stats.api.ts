@@ -11,7 +11,7 @@ export const getStatsUrl = ({ avg, country, period, type }: Filter) => {
 }
 
 export function useStatsData(filter: Filter) {
-  const [state, setState] = useState([])
+  const [state, setState] = useState(undefined)
   useEffect(() => {
     let requests
     if (filter.country === YUGOSLAVIA) {

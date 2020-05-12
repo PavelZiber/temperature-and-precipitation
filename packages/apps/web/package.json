@@ -22,7 +22,8 @@
     "develop": "craco start",
     "build": "craco build",
     "serve": "node server.js",
-    "test": "craco test",
+    "cra-test": "craco test",
+    "test": "CI=true yarn cra-test",
     "eject": "craco eject",
     "lint": "eslint src --ext js,jsx,ts,tsx",
     "lint:fix": "eslint src --ext js,jsx,ts,tsx --fix"

@@ -52,10 +52,10 @@ const countAvg = (response: StatsResponse<YearStatItem>[]): YearStatItem[] => {
 
 export const prepareData = (state: Filter) => {
   const filter = prepareFilter(state)
-  const result: StatsResponse<YearStatItem>[] = useStatsData(filter)
+  const result: any = useStatsData(filter)
   if (!result) {
     return undefined
   }
-  const response: YearStatItem[] = result?.length > 1 ? countAvg(result) : result[0].data
+  const response = result.length > 1 ? countAvg(result) : result[0]?.data
   return prepareResponse(response)
 }

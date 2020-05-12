@@ -54,10 +54,10 @@ const prepareFilter = (filter: Filter) => ({ ...filter, avg: STATS_MODE.MONTHLY_
 
 export function prepareData(state: Filter) {
   const filter = prepareFilter(state)
-  const result: StatsResponse<MonthStatItem>[] = useStatsData(filter)
+  const result: any = useStatsData(filter)
   if (!result) {
     return undefined
   }
-  const response = result?.length > 1 ? countAvg(result) : result[0].data
+  const response = result.length > 1 ? countAvg(result) : result[0].data
   return prepareResponse(response)
 }

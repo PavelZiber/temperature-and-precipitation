@@ -1,6 +1,6 @@
 import { Menubar } from 'primereact/menubar'
-// @ts-ignore
-import { DataTable, Column } from 'primereact/datatable'
+import { DataTable } from 'primereact/datatable'
+import { Column } from 'primereact/column'
 import { Card } from 'primereact/card'
 import { Chart } from 'primereact/chart'
 import { Layout } from './layout.component'

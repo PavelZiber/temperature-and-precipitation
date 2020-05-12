@@ -7,13 +7,14 @@
     "serve": "lerna run serve --scope=@apps/web",
     "update:dep": "lernaupdate",
     "synchro:dep": "lernaupdate --dedupe",
-    "lint": "lerna run lint --parallel",
-    "lint:fix": "lerna run lint:fix --parallel",
-    "tsc": "lerna run tsc --parallel"
+    "lint": "lerna run lint --parallel --since origin/master",
+    "lint:fix": "lerna run lint:fix --parallel --since origin/master",
+    "tsc": "lerna run tsc --parallel --since origin/master",
+    "test": "lerna run test --since origin/master"
   },
   "husky": {
     "hooks": {
-      "pre-commit": "yarn lint:fix && yarn tsc"
+      "pre-commit": "yarn lint:fix && yarn tsc && yarn test"
     }
   },
   "devDependencies": {
