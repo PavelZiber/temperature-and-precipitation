@@ -15,6 +15,6 @@
     "@shared/types": "*",
     "@shared/logic": "*",
     "@shared/components": "*",
-    "axios": "^0.19.2"
+    "axios": "^1.8.2"
   }
 }
